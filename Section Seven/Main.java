@@ -1,18 +1,18 @@
-import javax.management.loading.PrivateClassLoader;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Car nissan = new Car("Nissan", 5000, 2020, "red");
-
-
-        Car dodge = new Car("Dodge", 8500, 2019, "blue");
-
+        String[] parts = {"tires", "keys"};
+        Car nissan = new Car("Nissan", 5000, 2020, "red", parts);
+        Car dodge = new Car("Dodge", 8500, 2019, "blue", parts);
         Car nissan2 = new Car(nissan);
 
         nissan2.setColor("yellow");
+        nissan2.setParts(new String[] {"tires", "filter"}); 
 
-        nissan.drive();
-        dodge.drive();
-        nissan2.drive();
+        System.out.println(nissan);
+        System.out.println(dodge);
+        System.out.println(nissan2);
+
     }
 }
