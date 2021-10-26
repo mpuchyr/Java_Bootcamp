@@ -66,7 +66,7 @@ public class Person {
     }
 
     public boolean applyPassport() {
-        int randomNum = (int)(Math.random() * 3);
+        int randomNum = (int)(Math.random() * 2) + 1;
         if (randomNum == 1) {
             return true;
         } else {
@@ -75,7 +75,7 @@ public class Person {
     }
 
     public void chooseSeat() {
-        int randomSeat = (int)(Math.random() * 12);
+        int randomSeat = (int)(Math.random() * 11) + 1;
         this.seatNumber = randomSeat;
     }
 

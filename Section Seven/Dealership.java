@@ -1,10 +1,14 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Dealership {
     private Car[] cars;
 
-    public Dealership() {
-        this.cars = new Car[3];
+    public Dealership(Car[] cars) {
+        this.cars = new Car[cars.length];
+        for (int i = 0; i < cars.length; i++) {
+            this.cars[i] = new Car(cars[i]);
+        }
     }
 
     public void setCar(Car car, int index) {
@@ -20,18 +24,28 @@ public class Dealership {
         this.cars[index] = null;
     }
 
-    public String search(String make, int budget) {
-
+    public int search(String make, int budget) {
+        Scanner scan = new Scanner(System.in);
         for (int i = 0; i < this.cars.length; i++) {
             if (this.cars[i] == null) {
                 continue;
             }
-            if (this.cars[i].getMake().equals(make) && this.cars[i].getPrice() <= budget) {
-                return "\nWe found one in spot " + i + "\n" + this.cars[i].toString() + "\nAre you interested?";
+            if (this.cars[i].getMake().equalsIgnoreCase(make) && this.cars[i].getPrice() <= budget) {
+                System.out.println("\nWe found one in spot " + i + "\n" + this.cars[i].toString() + "\nAre you interested?");
+                String interest = scan.nextLine();
+
+                if (interest.equals("yes")) {
+                    scan.close();
+                    return i;
+                }
+
+                
             }
         }
 
-        return "Sorry, we couldn't find any cars";
+        System.out.println("\nYour search didn't match any results.\n");
+        scan.close();
+        return 404;
     }
 
     public String toString() {
