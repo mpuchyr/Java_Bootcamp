@@ -8,13 +8,14 @@ public class Pyramid {
                 continue;
             }
             for (int j = 1; j <= 10; j++) {
-                letter++;
                 if (j < i) {
                     System.out.print("   ");
                 } else {
-                    System.out.print(" " + letter + " ");
+                    System.out.print(letter);
+                    break;
                 }
             }
+            letter++;
             System.out.print("\n");
         }
     }

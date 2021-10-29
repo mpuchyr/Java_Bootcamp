@@ -8,7 +8,10 @@ public class TicTacToe {
         
         for (int i = 0; i < array.length; i++) {
                array[i][2-i] = 'O';
-               array[2-i][2-i] = 'X';
+               if (array[2-i][2-i] != 'O') {
+                    array[2-i][2-i] = 'X';
+               }
+               
         }
 
         printArray(array);
