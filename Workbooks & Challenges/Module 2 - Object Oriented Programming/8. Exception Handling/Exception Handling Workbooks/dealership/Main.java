@@ -9,11 +9,11 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         
         Car[] cars = new Car[] {
-            new Car("    ", -5000),
-            new Car("    ", 12000),
+            new Car("Nissan", 5000),
+            new Car("Jeep", 12000),
         };
-        cars[1].setMake("    ");
-        cars[1].setPrice(-8500);
+        cars[1].setMake("Dodge");
+        cars[1].setPrice(8500);
 
         Dealership dealership = new Dealership(cars);
 
@@ -22,10 +22,13 @@ public class Main {
             System.out.println(dealership);
             System.out.print("Enter the spot number of the car you want to buy: "); 
             int spot = scan.nextInt();
-            dealership.sell(spot);    
+            dealership.sell(spot);
+            if (dealership.isEmpty()) {
+                break;
+            }  
         }
 
-       //scan.close();
+       scan.close();
 
     }
 }

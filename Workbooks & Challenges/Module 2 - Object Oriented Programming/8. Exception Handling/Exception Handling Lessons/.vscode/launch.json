@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch ParseURL",
+            "request": "launch",
+            "mainClass": "ParseURL",
+            "projectName": "Exception Handling Lessons_f0aace22"
+        },
+        {
+            "type": "java",
+            "name": "Launch ParseURLTwo",
+            "request": "launch",
+            "mainClass": "ParseURLTwo",
+            "projectName": "Exception Handling Lessons_f0aace22"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReadingFiles",
+            "request": "launch",
+            "mainClass": "ReadingFiles",
+            "projectName": "Exception Handling Lessons_f0aace22"
+        },
+        {
+            "type": "java",
+            "name": "Launch ReadingFilesTwo",
+            "request": "launch",
+            "mainClass": "ReadingFilesTwo",
+            "projectName": "Exception Handling Lessons_f0aace22"
+        }
+    ]
+}
