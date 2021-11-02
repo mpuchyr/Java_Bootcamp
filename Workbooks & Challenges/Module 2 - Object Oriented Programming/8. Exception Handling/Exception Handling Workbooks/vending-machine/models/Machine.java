@@ -19,6 +19,14 @@ public class Machine {
         this.items[row][spot] = new Item(item);
     }
 
+    public int getLength() {
+        return this.items.length;
+    }
+
+    public int getRowLength(int row) {
+        return this.items[row].length;
+    }
+
     public void dispense(int row, int spot) {
         items[row][spot].setQuantity(items[row][spot].getQuantity() - 1);
     }

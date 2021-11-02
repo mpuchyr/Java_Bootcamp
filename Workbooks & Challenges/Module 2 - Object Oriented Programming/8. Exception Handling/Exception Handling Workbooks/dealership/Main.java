@@ -19,13 +19,32 @@ public class Main {
 
         System.out.println("\n************* JAVA DEALERSHIP *************");
         while (true) {
-            System.out.println(dealership);
-            System.out.print("Enter the spot number of the car you want to buy: "); 
-            int spot = scan.nextInt();
-            dealership.sell(spot);
             if (dealership.isEmpty()) {
+                System.out.println("We're all sold out!");
                 break;
             }  
+            System.out.println(dealership);
+            System.out.print("Enter the spot number of the car you want to buy: "); 
+            if (!scan.hasNextInt()) {
+                scan.nextLine();
+                System.out.println("Invalid input");
+                continue;
+            }
+            int spot = scan.nextInt();
+            scan.nextLine();
+            if (spot < 0 || spot > dealership.getLength() - 1) {
+                System.out.println("Invalid Index");
+                continue;
+            } else if (dealership.getCar(spot) == null) {
+                System.out.println("Empty Spot");
+                continue;
+            }
+            dealership.sell(spot);
+            System.out.println("Type 'yes' to continue shopping: ");
+            if (!scan.nextLine().equalsIgnoreCase("yes")) {
+                break;
+            }
+            
         }
 
        scan.close();
