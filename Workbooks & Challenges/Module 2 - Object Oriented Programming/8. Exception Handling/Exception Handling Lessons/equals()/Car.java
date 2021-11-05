@@ -28,5 +28,16 @@ public class Car {
         this.color = color;
     }
 
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Car)) {
+            return false;
+        }
+        Car car = (Car)obj;
+        return this.make.equals(car.make) && this.color.equals(car.color);
+    }
+
 
 }
