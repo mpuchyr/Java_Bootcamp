@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import javax.swing.event.SwingPropertyChangeSupport;
 
 public class OperationChain {
 
@@ -14,6 +17,17 @@ public class OperationChain {
         ArrayList<Double> updatePrices = new ArrayList<Double>();
         filterLowPrices(updatePrices);
         tax(updatePrices);
+
+        updatePrices.addAll(
+            prices.stream()
+            .filter((price) -> price < 5)
+            .map((price) -> price * 1.13)
+            .collect(Collectors.toList())
+        );
+
+        updatePrices.stream()
+            .forEach((price) -> System.out.println(price));
+
 
     }
     
