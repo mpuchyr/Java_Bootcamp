@@ -1,7 +1,7 @@
 package src.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,14 +16,40 @@ public class StoreTest {
     @Before
     public void setup() {
         store = new Store();
-        store.addMovie(new Movie("The Shawshank Redemption", "Blu-Ray", 9.2));
+        store.addMovie(new Movie("The Shawshank Redemption", "Blue-Ray", 9.2));
         store.addMovie(new Movie("The Godfather", "Blue-Ray", 9.1));
     }
 
     @Test
     public void movieAdded() {
-        Movie movie = new Movie("The Godfather", "Blue-Ray", 9.1);
-        assertTrue(store.contains(movie));
+       assertTrue(store.contains(new Movie("The Godfather", "Blue-Ray", 9.1))); 
+    }
+
+    @Test
+    public void sellMovieTest() {
+        store.sellMovie(new Movie("The Godfather", "Blue-Ray", 9.1));
+        assertFalse(store.contains(new Movie("The Godfather", "Blue-Ray", 9.1)));
+    }
+
+    @Test
+    public void rentMovieTest() {
+        store.rentMovie("The Shawshank Redemption");
+        int movieIndex = store.getMovieIndex("The Shawshank Redemption");
+        assertFalse(store.getMovie(movieIndex).isAvailable());
+    }
+
+    @Test
+    public void returnMovieTest() {
+        store.rentMovie("The Shawshank Redemption");
+        store.returnMovie("The Shawshank Redemption");
+        int movieIndex = store.getMovieIndex("The Shawshank Redemption");
+        assertTrue(store.getMovie(movieIndex).isAvailable());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void movieNotInStock() {
+        store.rentMovie("The Godfather");
+        store.sellMovie(new Movie("The Godfather", "Blue-Ray", 9.1));
     }
 
 }

@@ -103,4 +103,22 @@ public class Movie {
                "\t Availability: " + (this.isAvailable ? "in-stock" : "rented") + "\n";
     }
 
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(obj instanceof Movie)) {
+            return false;
+        }
+
+        Movie movie = (Movie)obj;
+        return this.name.equals(movie.name) &&
+            this.format.equals(movie.format) &&
+            this.rentalPrice == movie.rentalPrice &&
+            this.sellingPrice == movie.sellingPrice &&
+            this.isAvailable == movie.isAvailable;
+
+    }
+
 }
