@@ -5,13 +5,13 @@ The checkout process returns a receipt that holds the subtotal, tax, and total.
                Test Cases
 ----------------------------------------
 - adding an item if not already added
-    - `[identify test case 1]`
-    - `[identify test case 2]`
+    - test if cart contains the item after it's added.
+    - test if the cart skips duplicate item
 - removing an item
-    - `[identify test case 3]`
-    - `[identify state exception test case]`
+    - test if item gets removed after being sold
+    - test for IllegalStateException for trying to remove from an empty cart
 - checkout
-    - `[identify test case 5]`
-    - `[identify test case 6]`
-    - `[identify test case 7]`
-    - `[identify state exception test case]`
+    - test if subtotal is calculated correctly
+    - test if tax is calculated correctly
+    - test if total is calculated correctly
+    - test if illegal state exception is thrown if cart is empty
