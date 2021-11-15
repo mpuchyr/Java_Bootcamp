@@ -9,13 +9,12 @@ public class Main {
     public static void main(String[] args) {
         
 
-        Shirt shirt = new Shirt("SMALL", 5.99, "blue", "JAVA VUITTON");
+        Shirt shirt = new Shirt(Shirt.Size.SMALL, 5.99, "blue", "JAVA VUITTON");
         Pants pants = new Pants(32, 24.99, "blue", "JAVA KLEIN");
         Shirt shirt2 = new Shirt(shirt);
         Pants pants2 = new Pants(pants);
  
-        shirt.getPrice();
-        pants.setPrice(59.99);
+        System.out.println(shirt);
 
     }
   
