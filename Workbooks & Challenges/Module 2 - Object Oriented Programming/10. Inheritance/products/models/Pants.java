@@ -2,7 +2,7 @@ package models;
 
 import java.util.Objects;
 
-public class Pants extends Product {
+public class Pants extends Product implements Discountable {
     private int waist;
 
 
@@ -57,6 +57,19 @@ public class Pants extends Product {
             " brand='" + super.getBrand() + "'" +
             "}";
     }
+
+    @Override
+    public void fold() {
+        System.out.println("Hold pants upright");
+        System.out.println("Fold one leg over the other");
+        System.out.println("Fold pants from bottom in thirds");
+    }
+
+    @Override
+    public void discount() {
+        super.setPrice(super.getPrice() / 2);
+    }
+
 
 
 
