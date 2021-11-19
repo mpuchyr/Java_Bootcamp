@@ -1,11 +1,23 @@
 package src.main.model.account;
 
+import java.text.DecimalFormat;
+
 public abstract class Account {
-    private int id;
+    private String id;
     private String name;
     private double balance;
+    public enum TransactionType {
+        DEPOSIT, WITHDRAW
+    }
 
-    public Account (int id, String name, double balance) {
+    public Account (String id, String name, double balance) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Id cannot be null/blank");
+        }
+        if (name == null || id.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null/blank");
+        }
+
         this.id = id;
         this.name = name;
         this.balance = balance;
@@ -18,7 +30,7 @@ public abstract class Account {
     }
 
     // Getters
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -31,11 +43,17 @@ public abstract class Account {
     }
 
     // Setters
-    public void setId(int id) {
+    public void setId(String id) {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("Id cannot be null/blank");
+        }
         this.id = id;
     }
 
     public void setName(String name) {
+        if (name == null || id.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null/blank");
+        }
         this.name = name;
     }
 
@@ -44,10 +62,24 @@ public abstract class Account {
     }
 
     // Deposit
-    public void deposit(double amount) {
-        this.balance += amount;
-    }
+    public abstract void deposit(double amount);
 
     // Withdrawal
-    public abstract void withdrawal(double amount);
+    public abstract boolean withdrawal(double amount);
+
+    // Round
+    protected double round(double amount) {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        return Double.parseDouble(formatter.format(amount));
+    }
+
+    //To String
+    public String toString() {
+        return this.getClass().getSimpleName() + "    "
+            + "\tName: " + this.getName() + ""
+            + "\tId: " + this.getId() + ""
+            + "\tBalance: $" + this.getBalance() + "";
+    }
+
+
 }

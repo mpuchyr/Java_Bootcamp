@@ -2,7 +2,7 @@ package src.main.model.account;
 
 public class Loan extends Account {
 
-    public Loan (int id, String name, double balance) {
+    public Loan (String id, String name, double balance) {
         super(id, name, balance);
     }
 
@@ -11,8 +11,21 @@ public class Loan extends Account {
     }
 
     @Override
-    public void withdrawal(double amount) {
-
+    public void deposit(double amount) {
+        double newBalance = this.round(this.getBalance() - amount);
+        this.setBalance(newBalance);
     }
+
+    @Override
+    public boolean withdrawal(double amount) {
+        double newBalance = this.round(this.getBalance() + amount + (amount * 0.02));
+        if (newBalance > 10000) {
+            return false;
+        }
+        this.setBalance(newBalance);
+        return true;
+    }
+
+
 
 }

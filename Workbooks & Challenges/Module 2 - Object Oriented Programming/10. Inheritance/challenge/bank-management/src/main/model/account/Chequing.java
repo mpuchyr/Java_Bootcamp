@@ -1,8 +1,10 @@
 package src.main.model.account;
 
-public class Chequing extends Account { 
+import src.main.model.account.impl.Taxable;
 
-    public Chequing(int id, String name, double balance) {
+public class Chequing extends Account implements Taxable { 
+
+    public Chequing(String id, String name, double balance) {
         super(id, name, balance);
     }
 
@@ -11,14 +13,22 @@ public class Chequing extends Account {
     }
 
     @Override
-    public void withdrawal(double amount) {
-        if (amount > this.getBalance() && (this.getBalance() - amount > -200)) {
-            this.setBalance(this.getBalance() - amount - 5.50);
-        } else if (amount > this.getBalance() && (this.getBalance() - amount <= -200)) {
-            this.setBalance(-200.00);
-        } else {
-            this.setBalance(this.getBalance() - amount);
+    public void deposit(double amount) {
+        double newBalance = this.round(this.getBalance() + amount);
+        this.setBalance(newBalance);
+    }
+
+    @Override
+    public boolean withdrawal(double amount) {
+        double newBalance = this.round(this.getBalance() - amount);
+        if (newBalance < 0) {
+            newBalance -= 5.50;
         }
+        if (newBalance <= -200) {
+            return false;
+        }
+        this.setBalance(newBalance);
+        return true;
     }
 
 }
