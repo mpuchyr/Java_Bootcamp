@@ -26,5 +26,10 @@ public class Savings extends Account {
         return false;
     }
 
+    @Override
+    public Account clone() {
+        return new Savings(this);
+    }
+
 
 }

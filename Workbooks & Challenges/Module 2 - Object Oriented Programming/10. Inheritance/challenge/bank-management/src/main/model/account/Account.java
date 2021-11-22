@@ -81,5 +81,7 @@ public abstract class Account {
             + "\tBalance: $" + this.getBalance() + "";
     }
 
+    public abstract Account clone();
+
 
 }
