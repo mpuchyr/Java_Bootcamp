@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
 
     public enum TransactionType {
         DEPOSIT, WITHDRAW
@@ -103,11 +103,12 @@ public class Transaction {
         return Objects.hash(this.type, this.timestamp, this.id, this.amount);
     }
 
-
+    @Override
     public int compareTo(Transaction o) {
-        return Long.compare(this.timestamp, o.getTimestamp());
+        return Long.compare(this.timestamp, o.timestamp);
     }
     
+
 
     @Override
     public String toString() {
