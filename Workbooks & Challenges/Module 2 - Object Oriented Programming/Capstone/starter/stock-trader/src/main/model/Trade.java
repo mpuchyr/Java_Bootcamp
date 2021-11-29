@@ -5,12 +5,16 @@ public class Trade {
         MARKET_BUY, MARKET_SELL
     }
 
-    private String stock;
+    public enum Stock {
+        AAPL, FB, GOOG, TSLA
+    }
+
+    private Stock stock;
     private Type type;
     private int amount;
     private double price;
 
-    public Trade(String stock, Type type, int amount, double price) {
+    public Trade(Stock stock, Type type, int amount, double price) {
         this.stock = stock;
         this.type = type;
         this.amount = amount;
@@ -24,7 +28,7 @@ public class Trade {
         this.price = source.price;
     }
 
-    public String getStock() {
+    public Stock getStock() {
         return this.stock;
     }
 
@@ -40,7 +44,7 @@ public class Trade {
         return this.price;
     }
 
-    public void setStock(String stock) {
+    public void setStock(Stock stock) {
         this.stock = stock;
     }
 
