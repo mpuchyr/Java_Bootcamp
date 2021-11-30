@@ -26,7 +26,25 @@ public abstract class Account {
         this.funds = amount;
     }
 
-    
+    // Buying and Retrieving Shares
+
+    public int getShares(String name) {
+        if (this.portfolio.get(name) != null) {
+            return this.portfolio.get(name);
+        }
+        return 0;
+    }
+
+    public void addShares(String name, int amount) {
+        if (this.portfolio.get(name) != null) {
+            int newAmount = this.portfolio.get(name) + amount;
+            this.portfolio.replace(name, newAmount);
+        } else {
+            this.portfolio.put(name, amount);
+        }
+    }
+
+    public abstract boolean buy(String name, int amount, double price);
 
 
 }
