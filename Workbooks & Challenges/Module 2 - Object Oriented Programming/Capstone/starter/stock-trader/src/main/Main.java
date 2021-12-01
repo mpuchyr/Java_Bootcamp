@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 import src.main.model.account.Account;
+import src.main.model.account.Personal;
 import src.main.utils.Color;
 
 public class Main {
@@ -14,7 +15,6 @@ public class Main {
   
     public static void main(String[] args) {    
         explainApp();
-      
     }
 
     public static void explainApp() {

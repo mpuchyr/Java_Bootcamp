@@ -1,6 +1,9 @@
 package src.main.model.account;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
+
+import src.main.utils.Color;
 
 public abstract class Account {
 
@@ -44,7 +47,36 @@ public abstract class Account {
         }
     }
 
+    public boolean removeShares(String name, int amount) {
+        if (this.portfolio.get(name) != null) {
+            int newAmount = this.portfolio.get(name) - amount;
+            this.portfolio.replace(name, newAmount);
+            return true;
+        }
+        return false;
+    }
+
     public abstract boolean buy(String name, int amount, double price);
 
+    public abstract boolean sell(String name, int amount, double price);
+
+    public double round(double amount) {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        return Double.parseDouble(formatter.format(amount));
+    }
+
+    public String displayPortfolio() {
+        String temp = "";
+        for (String key: portfolio.keySet()) {
+            temp += "\n  " + key.toString() + "\t" + portfolio.get(key) + "\n";
+        }
+        return temp;
+    }
+
+    public String toString() {
+        return "\n  Stock\t\t"  + Color.RESET + "Shares" +
+        "\n\n" + displayPortfolio() + Color.RESET +
+        "\n  Funds Left\t" + Color.GREEN + "$" + round(this.getFunds()) + Color.RESET;
+    }
 
 }
