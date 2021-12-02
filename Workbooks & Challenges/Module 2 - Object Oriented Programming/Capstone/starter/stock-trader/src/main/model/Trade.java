@@ -4,11 +4,7 @@ public class Trade {
     public enum Type {
         MARKET_BUY, MARKET_SELL
     }
-
-    public enum Stock {
-        AAPL, FB, GOOG, TSLA
-    }
-
+    
     private Stock stock;
     private Type type;
     private int amount;

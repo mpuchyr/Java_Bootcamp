@@ -1,13 +1,20 @@
 package src.main;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+import src.main.model.Stock;
 import src.main.model.account.Account;
 import src.main.model.account.Personal;
+import src.main.model.account.TFSA;
 import src.main.utils.Color;
 
 public class Main {
+
 
     static Account account; 
     static final double INITIAL_DEPOSIT = 4000;
@@ -15,6 +22,27 @@ public class Main {
   
     public static void main(String[] args) {    
         explainApp();
+        String choice = accountChoice();
+        account = createAccount(choice);
+        initialBalance();
+
+        try {
+            for (int day = 1; day <= 2160; day++) {
+                displayPrices(day);
+                String buyOrSell = buyOrSell();
+                String stockChoice = chooseStock();
+                double price = Double.parseDouble(getPrice(Stock.valueOf(stockChoice), day));
+                int shares = numShares(stockChoice);
+                enactTransaction(buyOrSell, stockChoice, shares, price);
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        
+
+        scanner.close();
     }
 
     public static void explainApp() {
@@ -27,7 +55,7 @@ public class Main {
     
     public static void initialBalance() {
         System.out.print("\n\n  You created a " + Color.YELLOW + account.getClass().getSimpleName() + Color.RESET + " account.");
-        System.out.println(" Your account balance is " + Color.GREEN + "$" + "<account.getFunds()>" + Color.RESET);
+        System.out.println(" Your account balance is " + Color.GREEN + "$" + account.getFunds() + Color.RESET);
         System.out.print("\n  Enter anything to start trading: ");
         scanner.nextLine();
     }
@@ -41,6 +69,17 @@ public class Main {
             choice = scanner.nextLine();
         }
         return choice;
+    }
+
+    public static Account createAccount(String choice) {
+        switch(choice) {
+            case "a":
+                return new Personal(INITIAL_DEPOSIT);
+            case "b":
+                return new TFSA(INITIAL_DEPOSIT);
+            default:
+                return null;
+        }
     }
     
     
@@ -77,8 +116,8 @@ public class Main {
         return shares;
     }
     
-    /* TODO
-    public static void displayPrices(int day) {
+
+    public static void displayPrices(int day) throws Exception {
         System.out.println("\n\n\t  DAY " + day + " PRICES\n");
 
         System.out.println("  " + Color.BLUE + Stock.AAPL + "\t\t" + Color.GREEN + getPrice(Stock.AAPL, day));
@@ -87,7 +126,7 @@ public class Main {
         System.out.println("  " + Color.BLUE + Stock.TSLA + "\t\t" + Color.GREEN + getPrice(Stock.TSLA, day) + Color.RESET);
 
     }
-    */
+
     public static void tradeStatus(String result) {
         System.out.println("\n  The trade was " + (result.equals("successful") ? Color.GREEN : Color.RED) + result + Color.RESET + ". Here is your portfolio:");
         System.out.println(account);
@@ -96,16 +135,41 @@ public class Main {
     }
     
     
-    /* TODO
-    public static String getPrice(Stock stock, int day) {
-        return "15.2343";
+
+    public static String getPrice(Stock stock, int day) throws Exception {
+        String stockName = stock.name();
+        Path path = getPath(stockName);
+        String price = Files.lines(path)
+            .skip(0)
+            .filter((line) -> line.toString().split(",")[0].equals("" + day + ""))
+            .map((line) -> line.toString().split(",")[1])
+            .findFirst()
+            .orElse(null);
+        return price;
     }
 
 
-    public static Path getPath(String stock) {
-        return null;
+
+    public static Path getPath(String stock) throws Exception {
+        Path path = Paths.get(Thread.currentThread().getContextClassLoader().getResource("src/main/data/"+stock+".csv").toURI());
+        return path;
     }
-    */
+
+    public static void enactTransaction(String buyOrSell, String stockChoice, int shares, double price) {
+        double total = price * shares;
+        boolean success = false;
+        switch (buyOrSell) {
+            case "buy":
+                success = account.buy(stockChoice, shares, total);
+                break;
+            case "sell":
+                success = account.sell(stockChoice, shares, total);
+                break;
+        }
+
+        tradeStatus(success ? "successful" : "unsuccessful");
+
+    }
 
 
 }
