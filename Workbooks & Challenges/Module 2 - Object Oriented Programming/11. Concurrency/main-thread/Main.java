@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        // longTask();
+        longTask();
         System.out.println("Doing other work on main thread");
 
     }
