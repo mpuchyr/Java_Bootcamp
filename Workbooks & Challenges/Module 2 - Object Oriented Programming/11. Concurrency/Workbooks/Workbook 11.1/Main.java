@@ -3,6 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 
 public class Main {
@@ -17,15 +22,17 @@ public class Main {
         
         try {
             Path path = Paths.get(Thread.currentThread().getContextClassLoader().getResource(SALES).toURI());
-            Thread thread2 = new Thread(() -> furnitureAverage = average(path, "Furniture"));
-            Thread thread3 = new Thread(() -> technologyAverage = average(path, "Technology"));
-            Thread thread4 = new Thread(() -> officeSuppliesAverage = average(path, "Office Supplies"));
-            Thread thread5 = new Thread(() -> total = totalAverage(path));
-
-            thread2.start();
-            thread3.start();
-            thread4.start();
-            thread5.start();
+            // Thread thread2 = new Thread(() -> furnitureAverage = average(path, "Furniture"));
+            // Thread thread3 = new Thread(() -> technologyAverage = average(path, "Technology"));
+            // Thread thread4 = new Thread(() -> officeSuppliesAverage = average(path, "Office Supplies"));
+            // Thread thread5 = new Thread(() -> total = totalAverage(path));
+            int numThreads = Runtime.getRuntime().availableProcessors();
+            ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+            Future<Double> future = executor.submit(() -> average(path, "Furniture"));
+            Future<Double> future2 = executor.submit(() -> average(path, "Technology"));
+            Future<Double> future3 = executor.submit(() -> average(path, "Office Supplies"));
+            Future<Double> future4 = executor.submit(() -> totalAverage(path));
+            
 
 
 
@@ -33,17 +40,18 @@ public class Main {
             System.out.print("Please enter your name to access the Global Superstore dataset: ");
             String name = scan.nextLine();
             try {
-                thread2.join();
-                thread3.join();
-                thread4.join();
-                thread5.join();
+                furnitureAverage = future.get();
+                technologyAverage = future2.get();
+                officeSuppliesAverage = future3.get();
+                total = future4.get();
+                executor.shutdown();
 
                 System.out.println("\nThank you " + name + ". The average sales for Global Superstore are:\n");
                 System.out.println("Average Furniture Sales: " + furnitureAverage);
                 System.out.println("Average Technology Sales: " + technologyAverage);
                 System.out.println("Average Office Supplies Sales: " + officeSuppliesAverage);
                 System.out.println("Total Average: " + total);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
