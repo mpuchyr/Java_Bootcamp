@@ -1,5 +1,6 @@
-package SecondAttempt;
+
 import java.net.*;
+import model.URLInfo;
 
 public class Main {
     public static void main(String[] args) {
